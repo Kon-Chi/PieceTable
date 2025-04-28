@@ -28,6 +28,9 @@ class PieceTable(init: String = ""):
       else out.addAll(addBuf.substring(piece.start, piece.start + piece.length))
     out.mkString
 
+  def length: Int =
+    table.asScala.map(_.length).sum()
+
   def tableSize: Int = table.size()
 
   def insert(pos: Int, s: String): Unit =

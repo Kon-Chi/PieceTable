@@ -13,7 +13,7 @@ private case class Piece(
 class PieceTable(init: String = ""):
   @inline private def initTable(): LinkedList[Piece] =
     val t = LinkedList[Piece]()
-    t.add(Piece(true, 0, init.length))
+    if init.length != 0 then t.add(Piece(true, 0, init.length))
     t
 
   private val origBuf: String = init
@@ -56,10 +56,12 @@ class PieceTable(init: String = ""):
       piecePos += piece.length
     if pos != piecePos then throw IndexOutOfBoundsException(pos)
 
-    val lastPiece = it.previous()
-    it.next()
-    if !lastPiece.isOriginal && lastPiece.start + lastPiece.length == newPieceStart
-    then it.set(lastPiece.copy(length = lastPiece.length + s.length))
+    if table.size() > 0 then
+      val lastPiece = it.previous()
+      it.next()
+      if !lastPiece.isOriginal && lastPiece.start + lastPiece.length == newPieceStart
+      then it.set(lastPiece.copy(length = lastPiece.length + s.length))
+      else it.add(Piece(false, newPieceStart, s.length))
     else it.add(Piece(false, newPieceStart, s.length))
 
   def delete(pos: Int, count: Int): Unit =

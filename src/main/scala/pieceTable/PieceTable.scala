@@ -86,6 +86,7 @@ class PieceTable(init: String = ""):
           it.remove()
           piecePos -= piece.length
           toDelete -= piece.length
+          if toDelete == 0 then return
         else
           it.set(
             piece.copy(
